@@ -329,20 +329,21 @@ app.delete("/api/v1/expense/:expenseId", (request, response) => {
 
 // Modify and update the name of an expense folder
 app.post("/api/v1/expenseFolder/:expId", (request, response) => {
-  const expenseFolder_Id = request.params.expId;
+  // const expenseFolder_Id = request.params.expId;
+  const values = [request.body.name, request.params.expId];
 
   db.serialize(() => {
     const q = db.prepare(
       "UPDATE expense_folder SET name = ? WHERE expense_folder_id = ?"
     );
-    q.run(expenseFolder_Id, function (err) {
+    q.run(values, function (err) {
       if (err) {
         return response.status(500).json(err);
       }
 
       db.get(
         "SELECT * FROM expense_folder WHERE expense_folder_id = ?",
-        expenseFolder_Id,
+        request.params.expId,
         (err, data) => {
           if (err) {
             return response.status(500).json(err);
