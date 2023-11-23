@@ -8,7 +8,12 @@ dotenv.config();
 
 const app = express();
 
-const db = new sqlite3.Database("./db/expenseTrackerDB.db");
+const isTestEnv = process.env.NODE_ENV === "test";
+const path = isTestEnv
+  ? "./db/expenseTrackerTestDB.db"
+  : "./db/expenseTrackerDB.db";
+const db = new sqlite3.Database(path);
+// const db = new sqlite3.Database("./db/expenseTrackerDB.db");
 
 // const db = mysql.createConnection({
 //   host: process.env.DB_HOST,
