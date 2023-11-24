@@ -8,10 +8,17 @@ dotenv.config();
 
 const app = express();
 
+console.log(
+  "NODE_ENV Environment Variable: ",
+  JSON.stringify(process.env.NODE_ENV)
+);
 const isTestEnv = process.env.NODE_ENV === "test";
+console.log("isTestEnv Value: ", isTestEnv);
 const path = isTestEnv
   ? "./db/expenseTrackerTestDB.db"
   : "./db/expenseTrackerDB.db";
+
+console.log(path);
 const db = new sqlite3.Database(path);
 // const db = new sqlite3.Database("./db/expenseTrackerDB.db");
 
@@ -52,7 +59,7 @@ app.post("/api/v1/register", (request, response) => {
     );
     q.run(values, function (err) {
       if (err) {
-        return response.status(500).json(err);
+        return response.status(500).json("User already exists");
       }
 
       // Retrieve the inserted user
