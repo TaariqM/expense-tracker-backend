@@ -109,3 +109,76 @@ describe("User login scenarios", function () {
     });
   });
 });
+
+//---------------- FORGOT PASSWORD PAGE SCENARIOS ----------------//
+describe("Forgot password scenarios", function () {
+  describe("POST request to /api/v1/forgot_password", function () {
+    it("updates the user password", function (done) {});
+  });
+});
+
+//---------------- DASHBOARD PAGE SCENARIOS ----------------//
+describe("User Dashboard scenarios", function () {
+  describe("GET request to /api/v1/user/:id", function () {
+    it("successfully gets existing user information", function (done) {});
+
+    it("unsuccessfully gets existing user information", function (done) {});
+  });
+
+  describe("POST request to /api/v1/addExpenseFolder", function () {
+    it("successfully creates and adds an expense folder", function (done) {});
+
+    it("unsuccessfully creates and adds an expense folder", function (done) {});
+  });
+
+  describe("GET request to /api/v1/expenseFolder/:id", function () {
+    it("successfully gets all of the expense folders based off of the user id", function (done) {});
+
+    it("unsuccessfully gets all of the expense folders based off of the user id", function (done) {});
+  });
+
+  describe("GET request to /api/expenseFolder/:id/:expId", function () {
+    it("successfully gets a specific expense folder based off of the user id and expense folder id", function (done) {});
+
+    it("unsuccessfully gets a specific expense folder based off of the user id and expense folder id", function (done) {});
+  });
+
+  describe("POST request to /api/v1/expenseFolder/:expId", function () {
+    it("successfully updates the name of an expense folder", function (done) {});
+
+    it("unsuccessfully updates the name of an expense folder", function (done) {});
+  });
+
+  describe("DELETE request to /api/v1/expenseFolder/:expId", function () {
+    it("successfully deletes an expense folder", function (done) {});
+
+    it("unsuccessfully deletes an expense folder", function (done) {});
+  });
+});
+
+//---------------- EXPENSE PAGE SCENARIOS ----------------//
+describe("Expense page scenarios", function () {
+  describe("POST request to /api/v1/expense", function () {
+    it("successfully creates and adds a new expense", function (done) {});
+
+    it("unsuccessfully creates and adds a new expense", function (done) {});
+  });
+
+  describe("GET request to /api/v1/expense/:id/:expId", function () {
+    it("successfully gets all expenses based on the user id and expense folder id", function (done) {});
+
+    it("unsuccessfully gets all expenses based on the user id and expense folder id", function (done) {});
+  });
+
+  describe("POST request to /api/v1/expense/:expenseId", function () {
+    it("successfully edits/updates an expense", function (done) {});
+
+    it("unsuccessfully edits/updates an expense", function (done) {});
+  });
+
+  describe("DELETE request to /api/v1/expense/:expenseId", function () {
+    it("successfully deletes an expense", function (done) {});
+
+    it("unsuccessfully deletes an expense", function (done) {});
+  });
+});
