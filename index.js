@@ -275,7 +275,7 @@ app.get("/api/v1/expense/:id/:expId", (request, response) => {
       if (rows.length > 0) {
         return response.status(200).json(rows);
       } else {
-        return response.status(401).json({ message: "No expenses" });
+        return response.status(500).json({ message: "No expenses" });
       }
     });
   });

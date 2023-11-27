@@ -2,6 +2,8 @@ import request from "supertest";
 import assert from "assert";
 import app from "../index.js";
 
+let expenseNum = 9;
+
 const newUser = {
   email: "lebronjames@gmail.com",
   firstname: "Lebron",
@@ -35,8 +37,51 @@ const failedNewExpenseFolder = {
 };
 
 const updateExpenseFolderName = {
-  userId: 1,
-  folderName: "New Name",
+  expId: 1,
+  name: "New Name",
+};
+
+const failedUpdateExpenseFolderName = {
+  expId: 1000,
+  name: null,
+};
+
+const newExpense = {
+  user_Id: 1,
+  expenseFolder_Id: 2,
+  title: "New Expense",
+  amount: 20,
+  category: null,
+  desc: null,
+  date: "2023-11-27",
+};
+
+const failedNewExpense = {
+  user_Id: 1,
+  expenseFolder_Id: 2,
+  title: null,
+  amount: 20,
+  category: null,
+  desc: null,
+  date: "2023-11-27",
+};
+
+const updatedExpense = {
+  title: "New Expense Name",
+  amount: 20,
+  category: null,
+  desc: null,
+  date: "2023-11-26",
+  expenseId: 1,
+};
+
+const failedUpdatedExpense = {
+  title: "New Expense Name",
+  amount: null,
+  category: null,
+  desc: null,
+  date: "2023-11-26",
+  expenseId: 1,
 };
 
 function makePostRequest(requestURL) {
@@ -219,7 +264,7 @@ describe("User Dashboard scenarios", function () {
 
   describe("GET request to /api/v1/expenseFolder/:id/:expId", function () {
     it("successfully gets a specific expense folder based off of the user id and expense folder id", function (done) {
-      makeGetRequest("/api/v1/expenseFolder/" + 1 + "/" + 1)
+      makeGetRequest("/api/v1/expenseFolder/" + 1 + "/" + 2)
         .expect(200)
         .end(function (err, res) {
           if (err) {
@@ -243,7 +288,7 @@ describe("User Dashboard scenarios", function () {
 
   describe("POST request to /api/v1/expenseFolder/:expId", function () {
     it("successfully updates the name of an expense folder", function (done) {
-      makePostRequest("/api/v1/expenseFolder/" + 1)
+      makePostRequest("/api/v1/expenseFolder/" + 2)
         .send(updateExpenseFolderName)
         .expect(200)
         .end(function (err, res) {
@@ -255,8 +300,8 @@ describe("User Dashboard scenarios", function () {
     });
 
     it("unsuccessfully updates the name of an expense folder", function (done) {
-      makePostRequest("/api/v1/expenseFolder/" + 1)
-        .send(failedNewExpenseFolder)
+      makePostRequest("/api/v1/expenseFolder/" + 2)
+        .send(failedUpdateExpenseFolderName)
         .expect(500)
         .end(function (err, res) {
           if (err) {
@@ -267,36 +312,135 @@ describe("User Dashboard scenarios", function () {
     });
   });
 
-  // describe("DELETE request to /api/v1/expenseFolder/:expId", function () {
-  //   it("successfully deletes an expense folder", function (done) {});
+  describe("DELETE request to /api/v1/expenseFolder/:expId", function () {
+    it("successfully deletes an expense folder", function (done) {
+      makeDeleteRequest("/api/v1/expenseFolder/" + 1)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
 
-  //   it("unsuccessfully deletes an expense folder", function (done) {});
-  // });
+    // it("unsuccessfully deletes an expense folder", function (done) {
+    //   makeDeleteRequest("/api/v1/expenseFolder/" + 1)
+    //     .expect(500)
+    //     .end(function (err, res) {
+    //       if (err) {
+    //         return done(err);
+    //       }
+    //       done();
+    //     });
+    // });
+  });
 });
 
 //---------------- EXPENSE PAGE SCENARIOS ----------------//
-// describe("Expense page scenarios", function () {
-//   describe("POST request to /api/v1/expense", function () {
-//     it("successfully creates and adds a new expense", function (done) {});
+describe("Expense page scenarios", function () {
+  describe("POST request to /api/v1/expense", function () {
+    it("successfully creates and adds a new expense", function (done) {
+      makePostRequest("/api/v1/expense")
+        .send(newExpense)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
 
-//     it("unsuccessfully creates and adds a new expense", function (done) {});
-//   });
+    it("unsuccessfully creates and adds a new expense", function (done) {
+      makePostRequest("/api/v1/expense")
+        .send(failedNewExpense)
+        .expect(500)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
+  });
 
-//   describe("GET request to /api/v1/expense/:id/:expId", function () {
-//     it("successfully gets all expenses based on the user id and expense folder id", function (done) {});
+  describe("GET request to /api/v1/expense/:id/:expId", function () {
+    it("successfully gets all expenses based on the user id and expense folder id", function (done) {
+      makeGetRequest("/api/v1/expense/" + 1 + "/" + 2)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
 
-//     it("unsuccessfully gets all expenses based on the user id and expense folder id", function (done) {});
-//   });
+    it("unsuccessfully gets all expenses based on the user id and expense folder id", function (done) {
+      makeGetRequest("/api/v1/expense/" + 1000 + "/" + 2)
+        .expect(500)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
+  });
 
-//   describe("POST request to /api/v1/expense/:expenseId", function () {
-//     it("successfully edits/updates an expense", function (done) {});
+  describe("POST request to /api/v1/expense/:expenseId", function () {
+    it("successfully edits/updates an expense", function (done) {
+      makePostRequest("/api/v1/expense/" + 1)
+        .send(updatedExpense)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done(err);
+        });
+    });
 
-//     it("unsuccessfully edits/updates an expense", function (done) {});
-//   });
+    it("unsuccessfully edits/updates an expense", function (done) {
+      makePostRequest("/api/v1/expense/" + 1)
+        .send(failedUpdatedExpense)
+        .expect(500)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done(err);
+        });
+    });
+  });
 
-//   describe("DELETE request to /api/v1/expense/:expenseId", function () {
-//     it("successfully deletes an expense", function (done) {});
+  describe("DELETE request to /api/v1/expense/:expenseId", function () {
+    it("successfully deletes an expense", function (done) {
+      // makePostRequest("/api/v1/expense")
+      //   .send({
+      //     user_Id: 1,
+      //     expenseFolder_Id: 2,
+      //     title: "Expense",
+      //     amount: 30,
+      //     category: null,
+      //     desc: null,
+      //     date: "2023-11-27",
+      //   })
+      //   .expect(200);
+      // expenseNum++;
+      // console.log(expenseNum); // console logs 10
 
-//     it("unsuccessfully deletes an expense", function (done) {});
-//   });
-// });
+      makeDeleteRequest("/api/v1/expense/" + 10)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) {
+            return done(err);
+          }
+          done();
+        });
+    });
+
+    // it("unsuccessfully deletes an expense", function (done) {});
+  });
+});
