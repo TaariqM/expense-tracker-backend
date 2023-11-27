@@ -143,7 +143,7 @@ app.get("/api/v1/user/:id", (request, response) => {
       if (rows.length > 0) {
         return response.status(200).json(rows);
       } else {
-        return response.status(401).json({ message: "No users" });
+        return response.status(500).json({ message: "No users" });
       }
     });
     q.finalize();
@@ -192,7 +192,7 @@ app.get("/api/v1/expenseFolder/:id", (request, response) => {
       if (rows.length > 0) {
         return response.status(200).json(rows);
       } else {
-        return response.status(401).json({ message: "No users" });
+        return response.status(500).json({ message: "No users" });
       }
     });
     q.finalize();
@@ -215,7 +215,7 @@ app.get("/api/v1/expenseFolder/:id/:expId", (request, response) => {
       if (rows.length > 0) {
         return response.status(200).json(rows);
       } else {
-        return response.status(401).json({ message: "No expense folder" });
+        return response.status(500).json({ message: "No expense folder" });
       }
     });
     q.finalize();
