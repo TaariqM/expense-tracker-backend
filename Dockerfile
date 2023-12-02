@@ -46,5 +46,3 @@ COPY --from=production-deps /myapp/node_modules /myapp/node_modules
 COPY --from=build /myapp/package.json /myapp/package.json
 COPY --from=build /myapp/test /myapp/test
 COPY --from=build /myapp/db /myapp/db
-
-ENTRYPOINT [ "./start.sh" ]
