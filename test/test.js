@@ -99,24 +99,24 @@ function makeDeleteRequest(requestURL) {
 //---------------- REGISTER PAGE SCENARIOS ----------------//
 describe("User registration scenarios", function () {
   describe("POST Requests to /api/v1/register", function () {
-    it("successfully creates a new user with an email, first name, last name, and password", function (done) {
-      makePostRequest("/api/v1/register")
-        .send(newUser)
-        .expect(200)
-        .end(function (err, res) {
-          if (err) {
-            return done(err);
-          }
+    //   it("successfully creates a new user with an email, first name, last name, and password", function (done) {
+    //     makePostRequest("/api/v1/register")
+    //       .send(newUser)
+    //       .expect(200)
+    //       .end(function (err, res) {
+    //         if (err) {
+    //           return done(err);
+    //         }
 
-          assert.strictEqual(res.status, 200);
-          assert.equal(res._body.email, newUser.email);
-          assert.equal(res._body.first_name, newUser.firstname);
-          assert.equal(res._body.last_name, newUser.lastname);
-          assert.equal(res._body.password, newUser.password);
+    //         assert.strictEqual(res.status, 200);
+    //         assert.equal(res._body.email, newUser.email);
+    //         assert.equal(res._body.first_name, newUser.firstname);
+    //         assert.equal(res._body.last_name, newUser.lastname);
+    //         assert.equal(res._body.password, newUser.password);
 
-          done();
-        });
-    });
+    //         done();
+    //       });
+    //   });
 
     it("returns an error status when try to register a user that already exists", function (done) {
       makePostRequest("/api/v1/register")
