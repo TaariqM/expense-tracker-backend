@@ -33,7 +33,6 @@ RUN node setupDatabase.js
 RUN node setupTestDatabase.js
 
 ADD . .
-RUN npm run build
 
 # Finally, build the production image with minimal footprint
 FROM base
@@ -44,11 +43,8 @@ ENV NODE_ENV="production"
 WORKDIR /myapp
 
 COPY --from=production-deps /myapp/node_modules /myapp/node_modules
-COPY --from=build /myapp/dist /myapp/dist
-COPY --from=build /myapp/public /myapp/public
 COPY --from=build /myapp/package.json /myapp/package.json
-COPY --from=build /myapp/src /myapp/src
-COPY --from=build /myapp/start.sh /myapp/start.sh
+COPY --from=build /myapp/test /myapp/test
 COPY --from=build /myapp/db /myapp/db
 
 ENTRYPOINT [ "./start.sh" ]
