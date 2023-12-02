@@ -31,6 +31,7 @@ COPY setupDatabase.js ./
 COPY setupTestDatabase.js ./
 
 RUN mkdir /db
+RUN chmod -R 777 /db
 RUN node setupDatabase.js
 RUN node setupTestDatabase.js
 
