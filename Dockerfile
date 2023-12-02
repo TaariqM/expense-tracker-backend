@@ -27,7 +27,8 @@ FROM base as build
 WORKDIR /myapp
 
 COPY --from=deps /myapp/node_modules /myapp/node_modules
-ADD setupDatabase.js setupTestDatabase.js
+COPY setupDatabase.js ./
+COPY setupTestDatabase.js ./
 
 RUN mkdir /db
 RUN node setupDatabase.js
