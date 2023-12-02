@@ -31,7 +31,6 @@ COPY setupDatabase.js ./
 COPY setupTestDatabase.js ./
 
 RUN mkdir /db
-RUN chmod -R 777 /db
 RUN node setupDatabase.js
 RUN node setupTestDatabase.js
 
@@ -48,4 +47,5 @@ WORKDIR /myapp
 COPY --from=production-deps /myapp/node_modules /myapp/node_modules
 COPY --from=build /myapp/package.json /myapp/package.json
 COPY --from=build /myapp/test /myapp/test
-COPY --from=build /myapp/db /myapp/db
+
+RUN npm start
