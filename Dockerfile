@@ -4,6 +4,8 @@ FROM node:20-bullseye-slim as base
 # set for base and all layer that inherit from it
 ENV NODE_ENV production
 
+RUN mkdir /myapp/db
+
 # Install all node_modules, including dev dependencies
 FROM base as deps
 
@@ -31,7 +33,7 @@ COPY --from=deps /myapp/node_modules /myapp/node_modules
 # COPY /myapp/setupTestDatabase.js /myapp/setupTestDatabase.js
 # COPY /myapp/db /myapp/db
 
-RUN mkdir /myapp/db
+# RUN mkdir /myapp/db
 RUN node setupDatabase.js
 RUN node setupTestDatabase.js
 
