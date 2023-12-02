@@ -27,12 +27,13 @@ FROM base as build
 WORKDIR /myapp
 
 COPY --from=deps /myapp/node_modules /myapp/node_modules
-COPY setupDatabase.js ./
-COPY setupTestDatabase.js ./
+COPY /myapp/setupDatabase.js /myapp/setupDatabase.js
+COPY /myapp/setupTestDatabase.js /myapp/setupTestDatabase.js
+# COPY /myapp/db /myapp/db
 
-RUN mkdir /db
-RUN node setupDatabase.js
-RUN node setupTestDatabase.js
+RUN mkdir /myapp/db
+RUN node /myapp/setupDatabase.js
+RUN node /myapp/setupTestDatabase.js
 
 ADD . .
 
