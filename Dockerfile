@@ -28,7 +28,7 @@ WORKDIR /myapp
 
 COPY --from=deps /myapp/node_modules /myapp/node_modules
 
-ADD /db /db
+RUN mkdir /db
 RUN node setupDatabase.js
 RUN node setupTestDatabase.js
 
