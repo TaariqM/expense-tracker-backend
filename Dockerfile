@@ -47,6 +47,7 @@ WORKDIR /myapp
 COPY --from=production-deps /myapp/node_modules /myapp/node_modules
 COPY --from=build /myapp/package.json /myapp/package.json
 COPY --from=build /myapp/test /myapp/test
+COPY --from=build /myapp/db /myapp/db
 COPY --from=build /myapp/index.js /myapp/index.js
 COPY --from=build /myapp/setupDatabase.js /myapp/setupDatabase.js
 COPY --from=build /myapp/setupTestDatabase.js /myapp/setupTestDatabase.js
