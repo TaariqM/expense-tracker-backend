@@ -1,6 +1,9 @@
 const sqlite3 = require("sqlite3");
+const path = require("node:path");
 
-const db = new sqlite3.Database(__dirname + "/db/expenseTrackerTestDB.db");
+const db = new sqlite3.Database(
+  path.resolve(__dirname, "/db/expenseTrackerTestDB.db")
+);
 
 db.serialize(() => {
   // Create user table
