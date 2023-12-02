@@ -9,7 +9,7 @@ FROM base as deps
 
 WORKDIR /myapp
 
-ADD package.json package-lock.json ./
+ADD package.json package-lock.json setupDatabase.js setupTestDatabase.js ./
 RUN npm install --production=false
 
 # Setup production node_modules
